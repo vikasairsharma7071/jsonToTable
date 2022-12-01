@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="file" id="myfile" />
+    <table id="mytable">
+      <th>myTable</th>
+      <tbody id="tbody">
+        <tr id="row-temp"></tr>
+      </tbody>
+    </table>
+    <script>
+      var mydoc = document.getElementById("myfile");
+      mydoc.addEventListener("change", function (event) {
+        var reader = new FileReader();
+
+        reader.onload = function (event) {
+          var jsonObj = JSON.parse(event.target.result);
+          console.log(jsonObj);
+          for (const key in jsonObj) {
+            var root = document.getElementById("row-temp");
+            root.insertAdjacentHTML(
+              "beforebegin",
+              `<tr><td>${key}</td><td>${jsonObj[key]}</td></tr>`
+            );
+          }
+        };
+
+        reader.readAsText(event.target.files[0]);
+      });
+    </script>
+  </body>
+</html>
